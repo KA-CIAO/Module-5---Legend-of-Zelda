@@ -8,6 +8,8 @@ function GameObject:init(def, x, y)
     self.frame = def.frame or 1
 
     self.solid = def.solid
+    
+    self.consumable = def.consumable
 
     self.defaultState = def.defaultState
     self.state = self.defaultState
@@ -19,6 +21,7 @@ function GameObject:init(def, x, y)
     self.height = def.height
 
     self.onCollide = function() end
+    self.onConsume = function(player) end
 end
 
 function GameObject:update(dt)
