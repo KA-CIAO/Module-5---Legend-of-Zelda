@@ -46,7 +46,7 @@ end
 function PlayerSwingSwordState:update(dt)
     
     for k, entity in pairs(self.dungeon.currentRoom.entities) do
-        if entity:collides(self.swordHitbox) then
+        if entity:collides(self.swordHitbox) and not entity.dead then
             entity:damage(1)
             gSounds['hit-enemy']:play()
             
