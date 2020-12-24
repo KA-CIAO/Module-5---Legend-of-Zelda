@@ -18,3 +18,7 @@ end
 function Player:render()
     Entity.render(self)
 end
+
+function Player:healthUp(value)
+    self.health = math.min(self.health + value, 6)
+end
