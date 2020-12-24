@@ -48,6 +48,10 @@ end
 
 function Entity:damage(dmg)
     self.health = self.health - dmg
+    
+    if self.health == 0 then
+        self.dead = true
+    end
 end
 
 function Entity:goInvulnerable(duration)
@@ -57,6 +61,10 @@ end
 
 function Entity:changeState(name)
     self.stateMachine:change(name)
+end
+
+function Entity:changeStateWithParams(name, params)
+    self.stateMachine:change(name, params)
 end
 
 function Entity:changeAnimation(name)
@@ -98,4 +106,31 @@ function Entity:render(adjacentOffsetX, adjacentOffsetY)
     self.stateMachine:render()
     love.graphics.setColor(1, 1, 1, 1)
     self.x, self.y = self.x - (adjacentOffsetX or 0), self.y - (adjacentOffsetY or 0)
+end
+
+function Entity:inYvicinity(object)
+    
+    if self.direction == 'left' then
+    print(object.y < (self.y + self.height) and (self.y + self.height)  < (object.y + object.height))
+    print(object.y < self.y and self.y < (object.y + object.height))
+    end
+    return (
+        (object.y < (self.y + self.height) and (self.y + self.height)  < (object.y + object.height))
+        or
+        (object.y < self.y and self.y < (object.y + object.height))
+    )
+end
+
+function Entity:updateCoordinates(object)
+
+
+    if self.direction == 'left' and (self.x <= (object.x + object.width)) then
+        self.x = object.x + object.width
+    elseif self.direction == 'right' and (self.x + self.width) >= object.x then
+        self.x = object.x - self.width
+    elseif self.direction == 'up' then
+        self.y = object.y
+    elseif self.direction == 'down' then
+        self.y = object.y - self.height
+    end
 end
