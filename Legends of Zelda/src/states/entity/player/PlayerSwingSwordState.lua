@@ -49,6 +49,10 @@ function PlayerSwingSwordState:update(dt)
         if entity:collides(self.swordHitbox) then
             entity:damage(1)
             gSounds['hit-enemy']:play()
+            
+            if entity.dead and math.random(HEART_SPAWN_CHANCE) == 1 then
+                SpawnHeart(entity, self.dungeon.currentRoom.objects)
+            end
         end
     end
 
